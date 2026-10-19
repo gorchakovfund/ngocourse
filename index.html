@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>НКО без границ — расписание</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23DCC4B4'/%3E%3Ccircle cx='50' cy='50' r='32' fill='%2333719A'/%3E%3Ccircle cx='50' cy='50' r='20' fill='none' stroke='%23fff' stroke-width='5'/%3E%3Cpath d='M30 50h40M50 30v40' stroke='%23fff' stroke-width='5'/%3E%3C/svg%3E">
+<style>
+:root{
+  --blue:#33719A;
+  --blue-deep:#285D81;
+  --blue-soft:#5C93B6;
+  --sand:#DCC4B4;
+  --sand-deep:#C9AC98;
+  --mist:#E9E9EA;
+  --ink:#1E4A69;
+  --text:#2B3440;
+  --muted:#6B7785;
+  --line:#E3E6EA;
+  --paper:#FFFFFF;
+  --bg:#F6F7F8;
+  --display:'Unbounded', 'Arial Black', sans-serif;
+  --body:'Jost', 'Futura', 'Segoe UI', sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%}
+body{font-family:var(--body);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;font-size:17px;line-height:1.5}
+a{color:inherit}
+button,input{font:inherit}
+
+/* ---------- shared: blue field with wave ---------- */
+.field{position:relative;background:var(--blue);color:#fff;overflow:hidden;isolation:isolate}
+.field::before{content:"";position:absolute;z-index:-1;inset:0;
+  background:linear-gradient(180deg, rgba(92,147,182,.0), rgba(92,147,182,.0));
+}
+.wave{position:absolute;z-index:-1;top:0;right:0;height:100%;width:62%;pointer-events:none}
+.wave path{fill:var(--blue-soft);opacity:.55}
+
+/* ---------- logo ---------- */
+.mark{display:block;flex:none}
+.wordmark{font-family:var(--display);font-weight:900;line-height:.86;letter-spacing:-.01em}
+.wordmark .a{color:var(--sand);display:block}
+.wordmark .b{color:var(--mist);display:block;font-weight:800;letter-spacing:.01em}
+
+/* ---------- LOCK SCREEN ---------- */
+#lock{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.lock-inner{width:100%;max-width:520px}
+.lock-brand{display:flex;align-items:center;gap:18px;margin-bottom:44px}
+.lock-brand .mark{width:96px;height:auto}
+.lock-brand .wordmark .a{font-size:64px}
+.lock-brand .wordmark .b{font-size:27px;margin-top:6px}
+.lock-label{font-weight:300;font-size:20px;line-height:1.4;margin-bottom:22px;max-width:420px}
+.lock-form{display:flex;gap:12px;flex-wrap:wrap}
+.pin{flex:1 1 220px;min-width:0;height:62px;border:2px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);
+  color:#fff;padding:0 20px;font-family:var(--display);font-weight:600;font-size:24px;letter-spacing:.35em;outline:none;transition:border-color .2s, background .2s}
+.pin::placeholder{color:rgba(255,255,255,.45);letter-spacing:.35em}
+.pin:focus{border-color:var(--sand);background:rgba(255,255,255,.12)}
+.btn{height:62px;padding:0 34px;border:0;background:var(--sand);color:var(--blue-deep);font-weight:600;font-size:18px;cursor:pointer;transition:background .2s, transform .1s}
+.btn:hover{background:#E6D2C4}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.7;cursor:wait}
+.lock-error{min-height:26px;margin-top:12px;color:#FFE1D2;font-size:16px}
+.shake{animation:shake .35s}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.lock-foot{margin-top:40px;font-size:14px;color:rgba(255,255,255,.65);font-weight:300}
+
+/* ---------- SITE ---------- */
+#site{display:none}
+body.open #lock{display:none}
+body.open #site{display:block}
+
+.topbar{background:var(--paper);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
+.topbar .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.topbar .brand .mark{width:38px}
+.topbar .wordmark .a{font-size:21px;color:var(--sand-deep)}
+.topbar .wordmark .b{font-size:9px;color:var(--blue);margin-top:2px}
+.topbar .lockbtn{background:none;border:1px solid var(--line);color:var(--muted);padding:9px 16px;font-size:15px;cursor:pointer}
+.topbar .lockbtn:hover{border-color:var(--blue);color:var(--blue)}
+
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+.hero{padding:72px 0 80px}
+.eyebrow{display:inline-block;background:var(--sand);color:var(--blue-deep);font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;padding:7px 14px;margin-bottom:26px}
+.hero h1{font-family:var(--display);font-weight:900;font-size:clamp(38px,7vw,84px);line-height:.95;color:var(--sand);letter-spacing:-.015em}
+.hero h1 span{display:block;color:var(--mist);font-weight:800}
+.hero-meta{display:flex;flex-wrap:wrap;gap:12px 34px;margin-top:34px;font-weight:300;font-size:19px}
+.hero-meta b{font-weight:500}
+
+/* next lecture */
+.next{margin-top:-44px;position:relative;z-index:2}
+.next-card{background:var(--paper);box-shadow:0 18px 40px -18px rgba(30,74,105,.35);display:grid;grid-template-columns:auto 1fr auto;gap:0;border-left:8px solid var(--sand)}
+.next-date{background:var(--blue-deep);color:#fff;padding:28px 30px;display:flex;flex-direction:column;justify-content:center;min-width:170px}
+.next-date .lbl{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--sand);font-weight:500;margin-bottom:8px}
+.next-date .d{font-family:var(--display);font-weight:900;font-size:52px;line-height:1}
+.next-date .m{font-size:17px;margin-top:6px}
+.next-date .t{font-family:var(--display);font-weight:600;font-size:20px;margin-top:12px;color:var(--sand)}
+.next-body{padding:28px 32px}
+.next-body .tag{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--blue);font-weight:600}
+.next-body h2{font-family:var(--display);font-weight:600;font-size:clamp(20px,2.4vw,27px);line-height:1.2;color:var(--ink);margin:10px 0 8px}
+.next-body .sub{color:var(--muted);margin-bottom:12px}
+.next-body .spk{font-weight:500;color:var(--text)}
+.next-cta{display:flex;align-items:center;padding:28px 32px 28px 0}
+.countdown{font-size:15px;color:var(--muted);margin-top:14px}
+.countdown b{color:var(--blue);font-weight:600}
+
+.join{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 26px;background:var(--sand);color:var(--blue-deep);font-weight:600;text-decoration:none;white-space:nowrap;border:0}
+.join:hover{background:#E6D2C4}
+.join.pending{background:var(--mist);color:var(--muted);cursor:default;font-weight:500;white-space:normal;text-align:center;max-width:220px;height:auto;padding:12px 18px;font-size:15px;line-height:1.3}
+
+/* schedule */
+section.block{padding:84px 0 20px}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:30px}
+.sec-head h2{font-family:var(--display);font-weight:800;font-size:clamp(28px,4vw,44px);color:var(--blue);line-height:1}
+.sec-head p{color:var(--muted);font-size:16px}
+.filter{display:flex;gap:6px}
+.filter button{background:none;border:1px solid var(--line);padding:8px 14px;font-size:15px;color:var(--muted);cursor:pointer}
+.filter button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+
+.list{display:flex;flex-direction:column;gap:12px}
+.row{background:var(--paper);display:grid;grid-template-columns:132px 92px 1fr auto;align-items:center;border:1px solid var(--line);transition:border-color .2s, box-shadow .2s}
+.row:hover{border-color:#C8D6E2;box-shadow:0 10px 24px -18px rgba(30,74,105,.4)}
+.row .date{align-self:stretch;display:flex;flex-direction:column;justify-content:center;padding:22px 0 22px 26px}
+.row .date .d{font-family:var(--display);font-weight:800;font-size:36px;line-height:1;color:var(--blue)}
+.row .date .m{font-size:15px;color:var(--muted);margin-top:4px}
+.row .time{font-family:var(--display);font-weight:600;font-size:19px;color:var(--ink)}
+.row .time small{display:block;font-family:var(--body);font-weight:400;font-size:13px;color:var(--muted);letter-spacing:.04em}
+.row .info{padding:22px 24px 22px 0}
+.row .info h3{font-size:19px;font-weight:600;line-height:1.3;color:var(--ink)}
+.row .info .sub{font-size:15px;color:var(--muted);margin-top:4px;line-height:1.4}
+.row .info .spk{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{display:inline-block;background:#EEF3F7;color:var(--blue-deep);font-size:14px;padding:4px 10px}
+.people{display:grid;gap:10px;margin-top:12px}
+.person{border-left:3px solid var(--sand);padding-left:12px;line-height:1.35}
+.person b{display:block;font-weight:600;color:var(--ink);font-size:16px}
+.person span{display:block;font-size:14px;color:var(--muted)}
+.next-body .people{margin-top:14px}
+.row.past .person{border-left-color:var(--line)}
+.row.past .person b{color:#8C98A5}
+.row .act{padding:22px 26px 22px 0}
+.state{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+.state.past{color:var(--muted)}
+.state.live{color:#fff;background:#C0573E;padding:5px 10px;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.65}}
+.row.past{background:#FAFBFC}
+.row.past .date .d,.row.past .info h3,.row.past .time{color:#8C98A5}
+.row.past .chip{background:#F0F2F4;color:#8C98A5}
+.row.is-next{border-color:var(--sand);border-left:6px solid var(--sand)}
+.empty{padding:30px;background:var(--paper);border:1px dashed var(--line);color:var(--muted);text-align:center}
+
+/* info */
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--paper);border:1px solid var(--line);padding:28px}
+.card .n{font-family:var(--display);font-weight:800;font-size:30px;color:var(--sand-deep);line-height:1;margin-bottom:16px}
+.card h3{font-size:19px;font-weight:600;color:var(--ink);margin-bottom:8px}
+.card p{color:var(--muted);font-size:16px}
+
+footer.field{margin-top:90px;padding:64px 0 54px}
+.contacts{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:36px;align-items:start}
+.contacts h2{font-family:var(--display);font-weight:800;font-size:34px;color:var(--sand);line-height:1}
+.contact .role{font-size:14px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.06em}
+.contact .name{font-size:20px;font-weight:500;margin:8px 0 6px}
+.contact .phone{font-weight:300;display:block;text-decoration:none;margin-bottom:12px}
+.contact .links{display:flex;gap:8px;flex-wrap:wrap}
+.contact .links a{text-decoration:none;font-size:15px;border:1px solid rgba(255,255,255,.4);padding:7px 14px}
+.contact .links a:hover{background:var(--sand);color:var(--blue-deep);border-color:var(--sand)}
+.fine{margin-top:48px;padding-top:22px;border-top:1px solid rgba(255,255,255,.2);font-size:14px;color:rgba(255,255,255,.65);font-weight:300}
+
+@media (max-width:860px){
+  .next-card{grid-template-columns:1fr}
+  .next-date{flex-direction:row;align-items:baseline;gap:12px;flex-wrap:wrap;padding:20px 24px}
+  .next-date .lbl{width:100%;margin:0}
+  .next-date .d{font-size:40px}
+  .next-date .t{margin:0 0 0 auto}
+  .next-body{padding:22px 24px 6px}
+  .next-cta{padding:12px 24px 24px}
+  .row{grid-template-columns:auto 1fr;grid-template-areas:"date time" "info info" "act act"}
+  .row .date{grid-area:date;flex-direction:row;align-items:baseline;gap:8px;padding:18px 0 0 20px}
+  .row .date .d{font-size:28px}
+  .row .time{grid-area:time;justify-self:end;padding:18px 20px 0 0;text-align:right}
+  .row .info{grid-area:info;padding:10px 20px 4px}
+  .row .act{grid-area:act;padding:8px 20px 18px}
+  .info-grid{grid-template-columns:1fr}
+  .contacts{grid-template-columns:1fr}
+  .hero{padding:52px 0 72px}
+  .wave{width:100%;opacity:.7}
+}
+@media (max-width:520px){
+  .lock-brand .mark{width:70px}
+  .lock-brand .wordmark .a{font-size:48px}
+  .lock-brand .wordmark .b{font-size:20px}
+  .btn{flex:1 1 100%}
+  .wrap{padding:0 16px}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="logo" viewBox="0 0 130 120">
+      <!-- grey back bubble -->
+      <path d="M58 118c24 0 44-12 54-32l18 32H58z" fill="#E9E9EA"/>
+      <path d="M100 52c14 10 20 24 18 40-6 16-24 26-46 26-20 0-34-9-40-22 30 4 62-10 68-44z" fill="#E9E9EA"/>
+      <!-- sand front bubble -->
+      <path d="M56 4a52 52 0 1 1 0 104H2l14-18A52 52 0 0 1 56 4z" fill="#DCC4B4"/>
+      <circle cx="58" cy="56" r="37" fill="#33719A"/>
+      <g fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round">
+        <circle cx="58" cy="56" r="25"/>
+        <ellipse cx="58" cy="56" rx="11" ry="25"/>
+        <path d="M33 56h50M37 43h42M37 69h42"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ LOCK ============ -->
+<main id="lock" class="field">
+  <svg class="wave" viewBox="0 0 600 900" preserveAspectRatio="none" aria-hidden="true"><path d="M260 0C200 220 40 330 30 520 20 700 120 820 170 900H600V0z"/></svg>
+  <div class="lock-inner">
+    <div class="lock-brand">
+      <svg class="mark" viewBox="0 0 130 120"><use href="#logo"/></svg>
+      <div class="wordmark"><span class="a">НКО</span><span class="b">БЕЗ ГРАНИЦ</span></div>
+    </div>
+    <p class="lock-label">Страница участников онлайн-курса. Введите пароль, чтобы открыть расписание.</p>
+    <form class="lock-form" id="lockForm" autocomplete="off">
+      <input class="pin" id="pin" type="password" inputmode="numeric" placeholder="••••••" aria-label="Пароль" autocomplete="off" autofocus>
+      <button class="btn" id="go" type="submit">Войти</button>
+    </form>
+    <div class="lock-error" id="err" role="alert"></div>
+    <p class="lock-foot">Пароль приходит в письме участникам курса. Если вы его потеряли, напишите координатору.</p>
+  </div>
+</main>
+
+<!-- ============ SITE (filled after unlock) ============ -->
+<div id="site"></div>
+
+<script>
+/* ====== НАСТРОЙКА: адрес веб-приложения Apps Script (заканчивается на /exec) ====== */
+const API_URL = 'https://script.google.com/macros/s/AKfycbxx6H38lwCzz6Ro0_2UsNgU_1f6mfc2yUNSzYJun19JveFL1vvIbVR16c1ht1NAJaB4mA/exec';
+
+/* Постоянная информация о курсе (расписание приходит из Google-таблицы) */
+const COURSE = {
+  course: 'НКО без границ',
+  stage: 'Этап II · Онлайн-курс',
+  period: '15 октября — 15 ноября 2026',
+  platform: 'Контур',
+  contacts: [
+    {role:'Координатор по работе с участниками', name:'Шварц Полина Михайловна', phone:'+7 931 268 8315',
+     links:[{label:'WhatsApp', url:'https://wa.me/79312688315'},{label:'Telegram', url:'https://t.me/polina_shm'}]},
+    {role:'Руководитель проекта', name:'Зинковская Дарья Эльбертовна', phone:'',
+     links:[{label:'Telegram', url:'https://t.me/proGIRLdigy'}]}
+  ]
+};
+
+class WrongPassword extends Error {}
+async function loadSchedule(password){
+  const res = await fetch(API_URL + '?key=' + encodeURIComponent(password) + '&t=' + Date.now(), {cache:'no-store'});
+  const json = await res.json();
+  if(!json.ok){ if(json.error === 'password') throw new WrongPassword(); throw new Error(json.error || 'error'); }
+  return Object.assign({}, COURSE, {lectures: json.lectures});
+}
+
+const form = document.getElementById('lockForm'), pin = document.getElementById('pin'),
+      err = document.getElementById('err'), go = document.getElementById('go');
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const pw = pin.value.trim();
+  if(!pw){ pin.focus(); return; }
+  go.disabled = true; go.textContent = 'Проверяем…'; err.textContent = '';
+  try{
+    const data = await loadSchedule(pw);
+    render(data);
+    document.body.classList.add('open');
+    window.scrollTo(0,0);
+  }catch(ex){
+    err.textContent = ex instanceof WrongPassword
+      ? 'Неверный пароль. Попробуйте ещё раз.'
+      : 'Не удалось загрузить расписание. Проверьте интернет и попробуйте ещё раз.';
+    form.classList.remove('shake'); void form.offsetWidth; form.classList.add('shake');
+    pin.select();
+  }finally{
+    go.disabled = false; go.textContent = 'Войти';
+  }
+});
+
+/* ---------- rendering ---------- */
+const MONTHS = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const WEEK = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+const WEEK_S = ['вс','пн','вт','ср','чт','пт','сб'];
+const DURATION = 90; // minutes
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function parts(l){
+  const [y,mo,d] = l.date.split('-').map(Number);
+  const start = new Date(`${l.date}T${l.time}:00+03:00`);
+  const wd = new Date(Date.UTC(y,mo-1,d)).getUTCDay();
+  return {d, month:MONTHS[mo-1], wd:WEEK[wd], wds:WEEK_S[wd], start, end:new Date(start.getTime()+DURATION*60000)};
+}
+function people(list){
+  return `<div class="people">${list.map(x => {
+    const i = x.indexOf(',');
+    const name = i > 0 ? x.slice(0,i) : x, role = i > 0 ? x.slice(i+1).trim() : '';
+    return `<div class="person"><b>${esc(name)}</b>${role ? `<span>${esc(role)}</span>` : ''}</div>`;
+  }).join('')}</div>`;
+}
+function status(p, now){ return now >= p.end ? 'past' : now >= p.start ? 'live' : 'future'; }
+
+function linkBtn(l, platform){
+  return l.link
+    ? `<a class="join" href="${esc(l.link)}" target="_blank" rel="noopener">Подключиться →</a>`
+    : `<span class="join pending">Ссылка на ${esc(platform)} появится ближе к эфиру</span>`;
+}
+
+function countdown(p, now){
+  const ms = p.start - now;
+  if(ms <= 0) return '<b>Идёт сейчас</b>';
+  const days = Math.floor(ms/864e5), hrs = Math.floor(ms%864e5/36e5), min = Math.floor(ms%36e5/6e4);
+  if(days >= 1) return `До начала: <b>${days} д. ${hrs} ч.</b>`;
+  if(hrs >= 1) return `До начала: <b>${hrs} ч. ${min} мин.</b>`;
+  return `До начала: <b>${min} мин.</b>`;
+}
+
+let DATA, FILTER = 'all';
+function render(data){
+  DATA = data;
+  const site = document.getElementById('site');
+  site.innerHTML = `
+  <header class="topbar"><div class="wrap">
+    <a class="brand" href="#top">
+      <svg class="mark" viewBox="0 0 130 120"><use href="#logo"/></svg>
+      <div class="wordmark"><span class="a">НКО</span><span class="b">БЕЗ ГРАНИЦ</span></div>
+    </a>
+    <button class="lockbtn" onclick="location.reload()">Закрыть</button>
+  </div></header>
+
+  <section class="hero field" id="top">
+    <svg class="wave" viewBox="0 0 600 900" preserveAspectRatio="none" aria-hidden="true"><path d="M260 0C200 220 40 330 30 520 20 700 120 820 170 900H600V0z"/></svg>
+    <div class="wrap">
+      <span class="eyebrow">${esc(data.stage)}</span>
+      <h1>Расписание<span>вебинаров</span></h1>
+      <div class="hero-meta">
+        <div>Даты: <b>${esc(data.period)}</b></div>
+        <div>Платформа: <b>${esc(data.platform)}</b></div>
+        <div>Время: <b>московское</b></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap next" id="next"></div>
+
+  <section class="block"><div class="wrap">
+    <div class="sec-head">
+      <div><h2>Все вебинары</h2></div>
+      <div class="filter" role="tablist">
+        <button data-f="all" class="on">Все</button>
+        <button data-f="future">Предстоящие</button>
+        <button data-f="past">Прошедшие</button>
+      </div>
+    </div>
+    <div class="list" id="list"></div>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <div class="sec-head"><h2>Как подключиться</h2></div>
+    <div class="info-grid">
+      <div class="card"><div class="n">01</div><h3>Платформа ${esc(data.platform)}</h3><p>Все вебинары проходят онлайн на платформе ${esc(data.platform)}. Ссылка на каждый эфир появится в расписании и придёт вам на почту.</p></div>
+      <div class="card"><div class="n">02</div><h3>Напоминания на почту</h3><p>Утром в день вебинара и за 15 минут до начала мы присылаем письмо со ссылкой. Если расписание изменится, вы тоже узнаете об этом из письма.</p></div>
+      <div class="card"><div class="n">03</div><h3>Подключайтесь заранее</h3><p>Зайдите за 5–10 минут до начала, чтобы проверить звук и связь. Вопросы спикерам можно задавать в чате эфира.</p></div>
+    </div>
+  </div></section>
+
+  <footer class="field">
+    <svg class="wave" viewBox="0 0 600 900" preserveAspectRatio="none" aria-hidden="true"><path d="M260 0C200 220 40 330 30 520 20 700 120 820 170 900H600V0z"/></svg>
+    <div class="wrap">
+      <div class="contacts">
+        <h2>Контакты</h2>
+        ${data.contacts.map(c => `
+          <div class="contact">
+            <div class="role">${esc(c.role)}</div>
+            <div class="name">${esc(c.name)}</div>
+            ${c.phone ? `<a class="phone" href="tel:${esc(c.phone.replace(/\s/g,''))}">${esc(c.phone)}</a>` : ''}
+            <div class="links">${c.links.map(l => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)}</a>`).join('')}</div>
+          </div>`).join('')}
+      </div>
+      <div class="fine">${esc(data.course)} · ${esc(data.stage)} · Страница доступна только участникам курса</div>
+    </div>
+  </footer>`;
+
+  site.querySelectorAll('.filter button').forEach(b => b.addEventListener('click', () => {
+    FILTER = b.dataset.f;
+    site.querySelectorAll('.filter button').forEach(x => x.classList.toggle('on', x === b));
+    paint();
+  }));
+  paint();
+  clearInterval(window.__tick);
+  window.__tick = setInterval(paint, 30000);
+}
+
+function paint(){
+  const now = new Date();
+  const items = DATA.lectures.map(l => ({l, p:parts(l)})).sort((a,b) => a.p.start - b.p.start);
+  items.forEach(i => i.s = status(i.p, now));
+  const next = items.find(i => i.s !== 'past');
+
+  document.getElementById('next').innerHTML = next ? `
+    <div class="next-card">
+      <div class="next-date">
+        <div class="lbl">${next.s === 'live' ? 'Идёт сейчас' : 'Ближайший вебинар'}</div>
+        <div class="d">${next.p.d}</div>
+        <div class="m">${next.p.month}, ${next.p.wd}</div>
+        <div class="t">${esc(next.l.time)} МСК</div>
+      </div>
+      <div class="next-body">
+        <div class="tag">${esc(DATA.platform)}</div>
+        <h2>${esc(next.l.topic)}</h2>
+        ${next.l.subtitle ? `<p class="sub">${esc(next.l.subtitle)}</p>` : ''}
+        ${people(next.l.speakers)}
+        <div class="countdown">${countdown(next.p, now)}</div>
+      </div>
+      <div class="next-cta">${linkBtn(next.l, DATA.platform)}</div>
+    </div>` : `<div class="next-card"><div class="next-body"><h2>Все вебинары этапа завершены</h2><p class="sub">Спасибо, что были с нами!</p></div></div>`;
+
+  const shown = items.filter(i => FILTER === 'all' || (FILTER === 'past' ? i.s === 'past' : i.s !== 'past'));
+  document.getElementById('list').innerHTML = shown.length ? shown.map(i => `
+    <article class="row ${i.s === 'past' ? 'past' : ''} ${i === next ? 'is-next' : ''}">
+      <div class="date"><div class="d">${i.p.d}</div><div class="m">${i.p.month.slice(0,3)}, ${i.p.wds}</div></div>
+      <div class="time">${esc(i.l.time)}<small>МСК</small></div>
+      <div class="info">
+        <h3>${esc(i.l.topic)}</h3>
+        ${i.l.subtitle ? `<p class="sub">${esc(i.l.subtitle)}</p>` : ''}
+        ${people(i.l.speakers)}
+      </div>
+      <div class="act">${
+        i.s === 'past' ? '<span class="state past">Прошёл</span>' :
+        i.s === 'live' ? `<span class="state live">В эфире</span>` + (i.l.link ? ` ${linkBtn(i.l, DATA.platform)}` : '') :
+        (i.l.link ? linkBtn(i.l, DATA.platform) : '')
+      }</div>
+    </article>`).join('') : '<div class="empty">Здесь пока ничего нет</div>';
+}
+</script>
+</body>
+</html>
